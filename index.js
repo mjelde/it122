@@ -1,3 +1,4 @@
+  
 'use strict'
 
 import http from 'http';
@@ -16,15 +17,6 @@ http.createServer(function(request, response) {
         response.writeHead(200, {'Content-Type': 'text/html'});
         let all = data.getAll();
         response.write(JSON.stringify(all));
-        // fs.readFile('./index.html', null, function (error, data) {
-        // if (error) {
-        //     response.writeHead(404);
-        //     response.write('file not found');
-        // }
-        // else {
-        //     response.write(data);
-        //     }
-        // });
         response.end();
         break;
         case '/about':
