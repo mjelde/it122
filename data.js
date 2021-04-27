@@ -14,7 +14,7 @@ const getAll = () => {
 
 const getItem = (name) => {
     return data.find((item) => {
-        return item.name.toLowerCase() === name.toLowerCase();
+        return item.name === name;
     });
 };
 

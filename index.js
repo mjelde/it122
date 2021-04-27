@@ -1,4 +1,3 @@
-  
 'use strict'
 
 import http from 'http';
@@ -11,12 +10,14 @@ http.createServer(function(request, response) {
   var url = request.url;
   let urls = request.url.split("?");  // separate route from query string
   let path = urls[0].toLowerCase(); // Get Part of the path for case
-  let query = parse(url[1]);
+  let query = parse(urls[1]);
     switch(path) {
         case "/":
         response.writeHead(200, {'Content-Type': 'text/html'});
-        let all = data.getAll();
-        response.write(JSON.stringify(all));
+        response.write("<html><title>Hello World</title>");  
+        response.write("<body><h1>Hello World</h1></body></html>");  
+        // let all = data.getAll();
+        // response.write(JSON.stringify(all));
         response.end();
         break;
         case '/about':
@@ -31,17 +32,14 @@ http.createServer(function(request, response) {
         response.write(JSON.stringify(speakers));
         response.end(); 
         break;
-        case '/getDetail':
-          if (request.method == "GET") {
-                let found = data.getItem(query.name);
-                console.log(found);
-                response.writeHead(200, {'Content-Type': 'text/html'});
-                let result = (found) ? JSON.stringify(found) : "not found";
-                response.end(JSON.stringify(result));
-          }
+        case '/getdetail':
+          let found = data.getItem(query.name);
+          response.writeHead(200, {'Content-Type': 'text/html'});
+          let result = (found) ? JSON.stringify(found) : "not found";
+          response.end(JSON.stringify(result));
         break;
         default:
         response.writeHead(404, {'Content-Type': 'text/plain'});
         response.end('Page Not found time to try again!');
-          }
+    }
 }).listen(3000);
