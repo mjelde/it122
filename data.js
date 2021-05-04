@@ -39,4 +39,4 @@ const addItem = (newBook) => {
     return {added: oldLength !== data.length, total: data.length };
 };
 
-export { getAll, getItem }
+module.exports = { getAll, getItem, addItem, deleteItem }
