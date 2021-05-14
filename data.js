@@ -1,11 +1,11 @@
 'use strict'
 
 let data = [
-    {name: "Life", speaker:"Hugh Jackman", birthDate:1969, birthPlace:"Austin, TX"},
-    {name: "Love", speaker:"Rodney Smith", birthDate:1975, birthPlace:"San Jose, CA"},
-    {name: "Hope", speaker:"Scarlett Jones", birthDate:1973, birthPlace:"New York, NY"},
-    {name: "Winning", speaker:"Wolverine", birthDate:1975, birthPlace:"Sunnydale, CA"},
-    {name: "Happiness", speaker:"Jennifer Allen", birthDate:1992, birthPlace:"Ruston, VA"},
+    {name: "life", speaker:"Hugh Jackman", birthDate:1969, birthPlace:"Austin, TX"},
+    {name: "love", speaker:"Rodney Smith", birthDate:1975, birthPlace:"San Jose, CA"},
+    {name: "hope", speaker:"Scarlett Jones", birthDate:1973, birthPlace:"New York, NY"},
+    {name: "winning", speaker:"Wolverine", birthDate:1975, birthPlace:"Sunnydale, CA"},
+    {name: "happiness", speaker:"Jennifer Allen", birthDate:1992, birthPlace:"Ruston, VA"},
 ];
 
 const getAll = () => {

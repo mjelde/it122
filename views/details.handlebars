@@ -7,23 +7,19 @@
 
 <body>
     <div class="container">
-        <h1>Presentation Name and Speaker Details:</h1>
-        <table>
-            <tr>
-                <td><b>Presentation Name</b></td>
-                <td><b>Speaker</b></td>
-                <td><b>Birth Date</b></td>
-                <td><b>Birth Place</b></td>
-            </tr>
-        {{#each body}}
-        <tr>
-        <td>{{this.name}}</td>    
-        <td>{{this.speaker}}</td>    
-        <td>{{this.birthDate}}</td>    
-        <td>{{this.birthPlace}}</td>  
-        </tr>
-        {{/each}}
-        </table>
+        <div class="row" style="margin-top: 30px;">
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card text-center" style="width:40em;">
+                <div class="card-body" >
+
+<a href="/">Home</a>
+
+    <div class="container">
+        <h2>{{body.name}}</h2>
+        <h2>{{body.speaker}}</h2>
+        <h2>{{body.birthDate}}</h2>
+        <h2>{{body.birthPlace}}</h2>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>

@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
-// For security, connectionString should be in a separate file not committed to git
-const connectionString = "mongodb+srv://dbuser:Austin512@cluster0.zuoo4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const Schema = mongoose.Schema;
+const connectionString = require('../credentials.js');
 
 mongoose.connect(connectionString, {
     dbName: 'projects',
