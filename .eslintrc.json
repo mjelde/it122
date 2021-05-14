@@ -9,5 +9,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "prefer-arrow-callback": "warn",
+        "no-var": "warn",
     }
 }
