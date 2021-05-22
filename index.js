@@ -5,6 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const data = require('./data.js');
 const cors = require('cors');
+const Speaker = require("./models/speaker");
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
@@ -14,10 +15,13 @@ app.engine("handlebars", exphbs({defaultLayout: false}));
 app.set("view engine", "handlebars");
 
 // send content of 'home' view
-app.get('/', (req,res) => {
-  let result = data.getAll();
-  res.render('home', {body : result});
- });
+app.get('/', (req,res, next) => {
+  Speaker.find({}).lean()
+  .then((speakers) => {
+
+  res.render('home', {speakers: JSON.stringify(speakers)});
+  })
+  });
  
  // send plain text response
  app.get('/about', (req,res) => {
@@ -59,6 +63,3 @@ app.listen(app.get('port'), () => {
 //     return res.status(500).send('Database Error occurred');
 //   }
 // });
-
-
-
