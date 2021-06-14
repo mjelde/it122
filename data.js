@@ -28,12 +28,15 @@ const deleteItem = (name) => {
     return {deleted: oldLength !== data.length, total: data.length };
 };
 
-const addItem = (newBook) => {
+const addItem = (newItem) => {
+    if (!newItem["name"]) {
+        return {added: false };
+    }
     const oldLength = data.length;
-    // use existing get() method to check if book already in our list
-    let found = this.get(newBook.name);
+    // use existing get() method to check if Item already in our list
+    let found = getItem(newItem.name);
     if (!found) {
-        data.push(newBook);
+        data.push(newItem);
     }
     // if old & new array lengths differ, item was added
     return {added: oldLength !== data.length, total: data.length };
