@@ -53,11 +53,19 @@
 
     // {name: "happiness", speaker:"Jennifer Allen", birthDate:1992, birthPlace:"Ruston, VA"}
 
+    class SpeakerApp extends React.Component {
+        constructor(props) {
+        super(props);
+        this.state = {
+            items: {{{speakers}}}
+        };
+        }
+        render() {
+        return ( <SpeakerList data={speakers}/> );
+        }
+    }
 
-     ReactDOM.render(
-        <div><SpeakerList data={speakers}/></div>,
-        document.getElementById('root')
-      );
+    ReactDOM.render(  <Clock />,  document.getElementById('root') );
 
     </script>
 
