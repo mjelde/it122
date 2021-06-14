@@ -31,16 +31,17 @@ app.get('/', (req,res, next) => {
 
  // send content of 'home' view
 app.get('/get', (req,res) => {
-  let result = data.getItem(req.query.name);
+  //let result = data.getItem(req.query.name);
+  // return a single record
+  Speaker.findOne({"name": req.query.name }).lean()
+  .then((result) => {
+      console.log(result);
   res.render('details', {name: req.query.name, result: result });
- });
+  })
+  .catch(err => next(err));
 
- app.get('/getdetail', (req,res) => {
-  let result = data.getItem(req.query.name);
-  console.log(result);
-  console.log(req.query.name);
-  res.render('details', {body : result});
-});
+  
+ });
 
  // define 404 handler
  app.use((req,res) => {
