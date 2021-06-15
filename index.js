@@ -21,7 +21,7 @@ app.get('/', (req,res, next) => {
   Speaker.find({}).lean()
   .then((speakers) => {
     console.log(speakers)
-  res.render('home', {speakers: JSON.stringify(speakers)});
+  res.render('home2', {speakers: JSON.stringify(speakers)});
   })
   });
  

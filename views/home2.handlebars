@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <!-- <meta> tags> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>Home.Handlebars Page</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Click Presentation Name for Speaker Details:</h1>
+        <table>
+            <div id="root"></div>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <script type="text/babel">
+
+        const speakers = {{{speakers}}}
+        console.log(speakers)
+
+    const SpeakerList = (props) => {
+        const listItems = props.data.map((item) =>
+        <li key={item._id}>
+            <a href={"/get?name="+item.name}>{item.name}</a>
+            </li>);
+            return <ul>{listItems}</ul>
+            }
+
+    class SpeakerApp extends React.Component {
+        constructor(props) {
+        super(props);
+        this.state = {
+            items: {{{speakers}}}
+        };
+        }
+        render() {
+        return ( <SpeakerList data={speakers}/> );
+        }
+    }
+
+    ReactDOM.render(  <SpeakerApp />,  document.getElementById('root') );
+
+    </script>
+
+
+</body>
+</html>
