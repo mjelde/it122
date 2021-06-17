@@ -27,33 +27,52 @@
 
     <script type="text/babel">
 
-        const speakers = {{{speakers}}}
-        console.log(speakers)
-
     const SpeakerList = (props) => {
-        const listItems = props.data.map((item) =>
-        <li key={item._id}>
-            <a href={"/get?name="+item.name}>{item.name}</a>
-            </li>);
+    const listItems = props.data.map((item) =>
+        <li key={item._id} onClick={props.selectItem}> {item.name} </li>);
             return <ul>{listItems}</ul>
             }
+
+    const ItemDetail = (props) => {
+        return (
+        <div>
+        <h2>Details: </h2>
+        <ul>
+            <li><p>{props.details.name} </p> </li>
+        </ul>
+        </div>        
+        );}
 
     class SpeakerApp extends React.Component {
         constructor(props) {
         super(props);
         this.state = {
-            items: {{{speakers}}}
+            items: {{{speakers}}},
+            currentItem: {}
         };
+        this.selectItem = this.selectItem.bind(this);}
+
+    selectItem = (event) => {
+        console.log(item.name);
+        console.log(event.target.innerText);
+    const found = this.state.items.find((item) => {
+        return item.name === event.target.innerText
+        });
+        this.setState({currentItem: found})
         }
         render() {
-        return ( <SpeakerList data={speakers}/> );
+        return ( 
+            <div>
+            <SpeakerList data={this.state.items} clickHandler={this.selectItem} /> 
+            <ItemDetail details={this.state.currentItem} />
+            </div>
+            );
         }
     }
 
     ReactDOM.render(  <SpeakerApp />,  document.getElementById('root') );
 
     </script>
-
 
 </body>
 </html>

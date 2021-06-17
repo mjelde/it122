@@ -16,7 +16,7 @@ app.engine("handlebars", exphbs({defaultLayout: false}));
 app.set("view engine", "handlebars");
 app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
 
-// send content of 'home' view
+//  send content of 'home' view
 app.get('/', (req,res, next) => {
   Speaker.find({}).lean()
   .then((speakers) => {
@@ -28,7 +28,7 @@ app.get('/', (req,res, next) => {
  // send plain text response
  app.get('/about', (req,res) => {
   res.type('text/plain');
-  res.send('Sharon\'s About page');
+  res.send('Sharon Mjelde - IT122 - Seattle Central College');
  });
 
  // send content of 'home' view
