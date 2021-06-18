@@ -20,7 +20,6 @@ app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
 app.get('/', (req,res, next) => {
   Speaker.find({}).lean()
   .then((speakers) => {
-    console.log(speakers)
   res.render('home2', {speakers: JSON.stringify(speakers)});
   })
   });
