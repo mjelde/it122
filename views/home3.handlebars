@@ -10,7 +10,6 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
 
-
 </head>
 
 <body>
@@ -55,8 +54,8 @@
         this.selectItem = this.selectItem.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.clearForm = this.clearForm.bind(this);
-        this.saveForm = this.saveForm.bind(this);
         this.deleteForm = this.deleteForm.bind(this);
+        this.saveForm = this.saveForm.bind(this);
         }
 
     selectItem = (event) => {
@@ -77,36 +76,52 @@
     }
 
     saveForm = () => {
-      fetch("/api/savepresentation", {
+      let newItem = this.state.currentItem;
+      console.log(newItem)
+      fetch("/api/speaker/update", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(this.state.currentItem)
+        body: JSON.stringify(newItem)
       })
       .then(res => res.json())
-      .then((json) => { console.log(json) });
+      .then((json) => { 
+        console.log(json)
+          newItem._id = json._id;
+          let newList = this.state.items;
+          newList.push(newItem);
+          this.setState({items: newList});
+       });
     }
 
+    // the only part not working is the state and updating it when you delete without refreshing
+
     deleteForm = () => {
-      const SpeakerID = "/api/delete?name=" + this.state.currentItem.name
-      fetch(SpeakerID, {
+      if (this.state.currentItem == {}) return
+      
+      let deleteID = this.state.currentItem._id
+
+      const deleteName = "/api/speaker/delete/" + this.state.currentItem.name
+      fetch(deleteName, {
         method: "GET",
         headers: { 'Content-Type': 'application/json'},
       })
       .then(res => res.json())
-      .then((json) => { console.log(json) });
+      .then((json) => { 
+          console.log(json)
+          if (json.deleted.deletedCount > 0) {
+              let newList = this.state.items.filter(item => {
+                  return item._id != deleteID
+              })
+              this.setState({items: newList, currentItem: {}})
+          }
+       });
     }
 
     render() {
         return ( 
             <div>
             <SpeakerList data={this.state.items} selectItem={this.selectItem} /> 
-            <ItemDetail 
-                item = { this.state.currentItem } 
-                handleChange = { this.handleChange } 
-                clearForm = { this.clearForm } 
-                saveForm = { this.saveForm }
-                deleteForm = { this.deleteForm }
-            />
+            <ItemDetail details={this.state.currentItem} handleChange={this.handleChange} clearForm={ this.clearForm } saveForm = { this.saveForm } deleteForm = { this.deleteForm } />
             </div>
             );
         }
