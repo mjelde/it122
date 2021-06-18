@@ -35,6 +35,9 @@
         <h2>Details: </h2>
         <ul>
             <li><p>{props.details.name} </p> </li>
+            <li><p>{props.details.speaker} </p> </li>
+            <li><p>{props.details.birthDate} </p> </li>
+            <li><p>{props.details.birthPlace} </p> </li>
         </ul>
         </div>        
         );}
@@ -49,8 +52,6 @@
         this.selectItem = this.selectItem.bind(this);}
 
     selectItem = (event) => {
-        console.log(item.name);
-        console.log(event.target.innerText);
     const found = this.state.items.find((item) => {
         return item.name === event.target.innerText
         });
