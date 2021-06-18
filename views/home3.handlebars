@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+    <!-- <meta> tags> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>Home.Handlebars Page</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Click Presentation Name for Speaker Details:</h1>
+        <table>
+            <div id="root"></div>
+        </table>
+    </div>
+
+    <script type="text/babel">
+
+    const SpeakerList = (props) => {
+    const listItems = props.data.map((item) =>
+        <li key={item._id} onClick={props.selectItem}> {item.name} </li>);
+            return <ul>{listItems}</ul>
+            }
+
+    const ItemDetail = (props) => {
+        return (
+        <div>
+        <h2>Presentation Details: </h2>
+        <ul>
+            <label>Presentation Name:<input type="text" name="name" value={props.details.name || ""} onChange={props.handleChange} /></label><br />
+            <label>Speaker:<input type="text" name="speaker" value={props.details.speaker || ""} onChange={props.handleChange} /></label><br />
+            <label>Birth Date:<input type="text" name="birthDate" value={props.details.birthDate || ""} onChange={props.handleChange} /></label><br />
+            <label>Birth Place:<input type="text" name="birthPlace" value={props.details.birthPlace || ""} onChange={props.handleChange} /></label><br />
+        </ul>
+            <button name="clear" onClick={props.clearForm}> Clear </button>     
+            <button name="save" onClick={ props.saveForm }> Save </button>
+            <button name="delete" onClick={ props.deleteForm }> Delete </button>
+        </div>        
+        );}
+
+    class SpeakerApp extends React.Component {
+        constructor(props) {
+        super(props);
+        this.state = {
+            items: {{{speakers}}},
+            currentItem: {}
+        };
+        this.selectItem = this.selectItem.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.clearForm = this.clearForm.bind(this);
+        this.saveForm = this.saveForm.bind(this);
+        this.deleteForm = this.deleteForm.bind(this);
+        }
+
+    selectItem = (event) => {
+    const found = this.state.items.find((item) => {
+        return item.name === event.target.innerText
+        });
+        this.setState({currentItem: found})
+        }
+
+    handleChange = (event) => {      
+        let newItem = this.state.currentItem      
+        newItem[event.target.name] = event.target.value      
+        this.setState({currentItem: newItem})    
+        }
+
+    clearForm = () => {
+      this.setState({ currentItem: {} })
+    }
+
+    saveForm = () => {
+      fetch("/api/savepresentation", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(this.state.currentItem)
+      })
+      .then(res => res.json())
+      .then((json) => { console.log(json) });
+    }
+
+    deleteForm = () => {
+      const SpeakerID = "/api/delete?name=" + this.state.currentItem.name
+      fetch(SpeakerID, {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json'},
+      })
+      .then(res => res.json())
+      .then((json) => { console.log(json) });
+    }
+
+    render() {
+        return ( 
+            <div>
+            <SpeakerList data={this.state.items} selectItem={this.selectItem} /> 
+            <ItemDetail 
+                item = { this.state.currentItem } 
+                handleChange = { this.handleChange } 
+                clearForm = { this.clearForm } 
+                saveForm = { this.saveForm }
+                deleteForm = { this.deleteForm }
+            />
+            </div>
+            );
+        }
+    }
+
+    ReactDOM.render(  <SpeakerApp />,  document.getElementById('root') );
+
+    </script>
+
+</body>
+</html>
